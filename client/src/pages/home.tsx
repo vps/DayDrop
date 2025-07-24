@@ -13,6 +13,7 @@ export default function Home() {
   
   const {
     targetDate,
+    timeRemaining,
     daysRemaining,
     isComplete,
     setTargetDate,
@@ -33,7 +34,7 @@ export default function Home() {
       <div className="w-full max-w-sm space-y-8">
         <CountdownWidget
           targetDate={targetDate}
-          daysRemaining={daysRemaining}
+          timeRemaining={timeRemaining}
           onSetNewDate={() => setIsDatePickerOpen(true)}
           onOpenSettings={() => setIsSettingsOpen(true)}
           onReset={resetCountdown}

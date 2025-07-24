@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { calculateDaysRemaining, getDefaultTargetDate } from "@/lib/countdown-utils";
+import { calculateTimeRemaining, getDefaultTargetDate, type TimeRemaining } from "@/lib/countdown-utils";
 
 const STORAGE_KEY = "countdown-data";
 
@@ -9,7 +9,13 @@ interface CountdownData {
 
 export function useCountdown() {
   const [targetDate, setTargetDateState] = useState<Date | null>(null);
-  const [daysRemaining, setDaysRemaining] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    totalMs: 0
+  });
   const [isComplete, setIsComplete] = useState(false);
 
   // Load data from localStorage on mount
@@ -44,20 +50,20 @@ export function useCountdown() {
     }
   }, [targetDate]);
 
-  // Update countdown daily
+  // Update countdown every second
   useEffect(() => {
     const updateCountdown = () => {
       if (targetDate) {
-        const days = calculateDaysRemaining(targetDate);
-        setDaysRemaining(Math.max(0, days));
-        setIsComplete(days <= 0);
+        const remaining = calculateTimeRemaining(targetDate);
+        setTimeRemaining(remaining);
+        setIsComplete(remaining.totalMs <= 0);
       }
     };
 
     updateCountdown();
 
-    // Update every minute to ensure accuracy
-    const interval = setInterval(updateCountdown, 60000);
+    // Update every second for real-time display
+    const interval = setInterval(updateCountdown, 1000);
     
     return () => clearInterval(interval);
   }, [targetDate]);
@@ -75,7 +81,8 @@ export function useCountdown() {
 
   return {
     targetDate,
-    daysRemaining,
+    timeRemaining,
+    daysRemaining: timeRemaining.days,
     isComplete,
     setTargetDate,
     resetCountdown

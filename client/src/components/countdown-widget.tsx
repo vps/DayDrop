@@ -1,10 +1,10 @@
 import { Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { formatDate } from "@/lib/countdown-utils";
+import { formatDate, type TimeRemaining } from "@/lib/countdown-utils";
 
 interface CountdownWidgetProps {
   targetDate: Date | null;
-  daysRemaining: number;
+  timeRemaining: TimeRemaining;
   onSetNewDate: () => void;
   onOpenSettings: () => void;
   onReset: () => void;
@@ -12,7 +12,7 @@ interface CountdownWidgetProps {
 
 export default function CountdownWidget({
   targetDate,
-  daysRemaining,
+  timeRemaining,
   onSetNewDate,
   onOpenSettings,
   onReset
@@ -32,11 +32,36 @@ export default function CountdownWidget({
 
       {/* Main Countdown Display */}
       <div className="px-6 py-8 text-center">
-        <div className="text-6xl font-bold text-ios-text mb-2 tabular-nums">
-          {daysRemaining}
+        {/* Days Display */}
+        <div className="text-5xl font-bold text-ios-text mb-2 tabular-nums">
+          {timeRemaining.days}
         </div>
         <div className="text-lg text-gray-600 font-medium mb-4">
-          {daysRemaining === 1 ? 'day remaining' : 'days remaining'}
+          {timeRemaining.days === 1 ? 'day' : 'days'}
+        </div>
+        
+        {/* Time Breakdown Display */}
+        <div className="flex justify-center space-x-4 mb-4">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-ios-text tabular-nums">
+              {String(timeRemaining.hours).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-gray-500 font-medium">hours</div>
+          </div>
+          <div className="text-2xl font-bold text-gray-400 self-start">:</div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-ios-text tabular-nums">
+              {String(timeRemaining.minutes).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-gray-500 font-medium">minutes</div>
+          </div>
+          <div className="text-2xl font-bold text-gray-400 self-start">:</div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-ios-text tabular-nums">
+              {String(timeRemaining.seconds).padStart(2, '0')}
+            </div>
+            <div className="text-xs text-gray-500 font-medium">seconds</div>
+          </div>
         </div>
         
         {/* Target Date Display */}
