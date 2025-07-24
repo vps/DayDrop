@@ -1,5 +1,4 @@
 import { Twitter, Facebook, Linkedin, MessageCircle, Send, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { TimeRemaining } from "@/lib/countdown-utils";
 
 interface SocialShareProps {
@@ -41,68 +40,56 @@ export default function SocialShare({ timeRemaining }: SocialShareProps) {
   return (
     <div className="w-full space-y-4">
       <div className="text-center">
-        <h3 className="text-sm font-semibold text-ios-text mb-3">Share Countdown</h3>
+        <h3 className="text-sm font-semibold text-ios-text dark:text-white mb-3">Share Countdown</h3>
         
-        <div className="grid grid-cols-3 gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
+        <div className="grid grid-cols-3 gap-3">
+          <button
             onClick={shareLinks.twitter}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
+            className="flex flex-col items-center p-3 rounded-lg transition-colors hover:bg-ios-gray-100 dark:hover:bg-white/5"
           >
             <Twitter className="w-5 h-5 mb-1 text-ios-blue" />
             <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Twitter</span>
-          </Button>
+          </button>
           
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={shareLinks.facebook}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
+            className="flex flex-col items-center p-3 rounded-lg transition-colors hover:bg-ios-gray-100 dark:hover:bg-white/5"
           >
             <Facebook className="w-5 h-5 mb-1 text-ios-blue" />
             <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Facebook</span>
-          </Button>
+          </button>
           
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={shareLinks.linkedin}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
+            className="flex flex-col items-center p-3 rounded-lg transition-colors hover:bg-ios-gray-100 dark:hover:bg-white/5"
           >
             <Linkedin className="w-5 h-5 mb-1 text-ios-blue" />
             <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">LinkedIn</span>
-          </Button>
+          </button>
           
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={shareLinks.whatsapp}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
+            className="flex flex-col items-center p-3 rounded-lg transition-colors hover:bg-ios-gray-100 dark:hover:bg-white/5"
           >
             <MessageCircle className="w-5 h-5 mb-1 text-ios-green" />
             <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">WhatsApp</span>
-          </Button>
+          </button>
           
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={shareLinks.telegram}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
+            className="flex flex-col items-center p-3 rounded-lg transition-colors hover:bg-ios-gray-100 dark:hover:bg-white/5"
           >
             <Send className="w-5 h-5 mb-1 text-ios-blue" />
             <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Telegram</span>
-          </Button>
+          </button>
           
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={shareLinks.email}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
+            className="flex flex-col items-center p-3 rounded-lg transition-colors hover:bg-ios-gray-100 dark:hover:bg-white/5"
           >
             <Mail className="w-5 h-5 mb-1 text-ios-gray-600" />
             <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Email</span>
-          </Button>
+          </button>
         </div>
       </div>
     </div>
