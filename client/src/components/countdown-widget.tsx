@@ -1,33 +1,35 @@
-import { Settings } from "lucide-react";
+import { Copy, Check } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { formatDate, type TimeRemaining } from "@/lib/countdown-utils";
 
 interface CountdownWidgetProps {
   targetDate: Date | null;
   timeRemaining: TimeRemaining;
-  onSetNewDate: () => void;
-  onOpenSettings: () => void;
-  onReset: () => void;
 }
 
 export default function CountdownWidget({
   targetDate,
-  timeRemaining,
-  onSetNewDate,
-  onOpenSettings,
-  onReset
+  timeRemaining
 }: CountdownWidgetProps) {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = async () => {
+    const countdownText = `Hey, the amount of days until Christmas is ${timeRemaining.days} days, ${timeRemaining.hours} hours, ${timeRemaining.minutes} minutes, ${timeRemaining.seconds} seconds`;
+    
+    try {
+      await navigator.clipboard.writeText(countdownText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
   return (
     <div className="bg-white rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden">
       {/* Header Section */}
-      <div className="bg-ios-blue px-6 py-4 text-center relative">
-        <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN</h1>
-        <button
-          onClick={onOpenSettings}
-          className="absolute top-4 right-4 text-white opacity-80 hover:opacity-100 transition-opacity"
-        >
-          <Settings className="w-5 h-5" />
-        </button>
+      <div className="bg-ios-blue px-6 py-4 text-center">
+        <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN TO CHRISTMAS</h1>
       </div>
 
       {/* Main Countdown Display */}
@@ -87,20 +89,23 @@ export default function CountdownWidget({
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="px-6 pb-6 space-y-3">
+      {/* Copy Button */}
+      <div className="px-6 pb-6">
         <Button
-          onClick={onSetNewDate}
-          className="w-full bg-ios-blue hover:bg-ios-blue/90 text-white py-3 rounded-xl font-semibold transition-colors"
+          onClick={copyToClipboard}
+          className="w-full bg-ios-green hover:bg-ios-green/90 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
         >
-          Set New Date
-        </Button>
-        <Button
-          onClick={onReset}
-          variant="secondary"
-          className="w-full bg-gray-100 hover:bg-gray-200 text-ios-text py-3 rounded-xl font-medium transition-colors"
-        >
-          Reset
+          {copied ? (
+            <>
+              <Check className="w-4 h-4" />
+              Copied!
+            </>
+          ) : (
+            <>
+              <Copy className="w-4 h-4" />
+              Copy Countdown
+            </>
+          )}
         </Button>
       </div>
     </div>
