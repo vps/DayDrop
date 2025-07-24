@@ -12,27 +12,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const diffMs = targetDate.getTime() - now.getTime();
       const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
       
-      // Create elegant minimalist preview card
+      // Create square preview card with big number
       const svgCard = `
-<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1c1c1e;stop-opacity:1" />
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#007AFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5AC8FA;stop-opacity:1" />
     </linearGradient>
   </defs>
   
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <!-- Background gradient -->
+  <rect width="512" height="512" fill="url(#gradient)"/>
   
-  <!-- Main number with clean typography -->
-  <text x="600" y="320" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="220" font-weight="200" text-anchor="middle" fill="white" letter-spacing="-5">${days}</text>
+  <!-- Big number -->
+  <text x="256" y="280" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="180" font-weight="bold" text-anchor="middle" fill="white">${days}</text>
   
-  <!-- Simple subtitle -->
-  <text x="600" y="400" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="300" text-anchor="middle" fill="#888" letter-spacing="2">DAYS LEFT</text>
-  
-  <!-- Minimal accent -->
-  <rect x="550" y="440" width="100" height="2" fill="#007AFF" opacity="0.8"/>
+  <!-- Subtitle -->
+  <text x="256" y="350" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="36" font-weight="500" text-anchor="middle" fill="white" opacity="0.9">DAYS</text>
 </svg>`;
       
       const pngBuffer = await sharp(Buffer.from(svgCard))
