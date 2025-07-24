@@ -26,7 +26,7 @@ export default function CountdownWidget({
     }
   };
   return (
-    <div className="bg-white rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden">
+    <div className="bg-ios-card-bg rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden border border-ios-gray-200 dark:border-ios-gray-200">
       {/* Header Section */}
       <div className="bg-ios-blue px-6 py-4 text-center">
         <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN</h1>
@@ -38,7 +38,7 @@ export default function CountdownWidget({
         <div className="text-5xl font-bold text-ios-text mb-2 tabular-nums">
           {timeRemaining.days}
         </div>
-        <div className="text-lg text-gray-600 font-medium mb-4">
+        <div className="text-lg text-ios-gray-600 font-medium mb-4">
           {timeRemaining.days === 1 ? 'day' : 'days'}
         </div>
         
@@ -48,27 +48,27 @@ export default function CountdownWidget({
             <div className="text-2xl font-bold text-ios-text tabular-nums">
               {String(timeRemaining.hours).padStart(2, '0')}
             </div>
-            <div className="text-xs text-gray-500 font-medium">hours</div>
+            <div className="text-xs text-ios-gray-500 font-medium">hours</div>
           </div>
-          <div className="text-2xl font-bold text-gray-400 self-start">:</div>
+          <div className="text-2xl font-bold text-ios-gray-400 self-start">:</div>
           <div className="text-center">
             <div className="text-2xl font-bold text-ios-text tabular-nums">
               {String(timeRemaining.minutes).padStart(2, '0')}
             </div>
-            <div className="text-xs text-gray-500 font-medium">minutes</div>
+            <div className="text-xs text-ios-gray-500 font-medium">minutes</div>
           </div>
-          <div className="text-2xl font-bold text-gray-400 self-start">:</div>
+          <div className="text-2xl font-bold text-ios-gray-400 self-start">:</div>
           <div className="text-center">
             <div className="text-2xl font-bold text-ios-text tabular-nums">
               {String(timeRemaining.seconds).padStart(2, '0')}
             </div>
-            <div className="text-xs text-gray-500 font-medium">seconds</div>
+            <div className="text-xs text-ios-gray-500 font-medium">seconds</div>
           </div>
         </div>
         
         {/* Target Date Display */}
         {targetDate && (
-          <div className="text-sm text-gray-500 mb-6">
+          <div className="text-sm text-ios-gray-500 mb-6">
             Until <span className="font-medium text-ios-text">{formatDate(targetDate)}</span>
           </div>
         )}
@@ -76,11 +76,11 @@ export default function CountdownWidget({
         {/* Status Indicator */}
         <div className="flex items-center justify-center space-x-2 mb-2">
           <div className="w-3 h-3 bg-ios-green rounded-full animate-pulse"></div>
-          <span className="text-xs text-gray-600 font-medium">ACTIVE</span>
+          <span className="text-xs text-ios-gray-600 font-medium">ACTIVE</span>
         </div>
         
         {/* Last Updated Indicator */}
-        <div className="text-xs text-gray-400 text-center">
+        <div className="text-xs text-ios-gray-400 text-center">
           Last updated: {new Date(timeRemaining.lastUpdated).toLocaleTimeString([], { 
             hour: '2-digit', 
             minute: '2-digit',
