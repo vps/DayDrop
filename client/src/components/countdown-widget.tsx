@@ -1,7 +1,8 @@
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Share2, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { formatDate, type TimeRemaining } from "@/lib/countdown-utils";
+import SocialShare from "./social-share";
 
 interface CountdownWidgetProps {
   targetDate: Date | null;
@@ -13,6 +14,7 @@ export default function CountdownWidget({
   timeRemaining
 }: CountdownWidgetProps) {
   const [copied, setCopied] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const copyToClipboard = async () => {
     const countdownText = `Hey jaani, the amount of days until forever with you is ${timeRemaining.days} days, ${timeRemaining.hours} hours, ${timeRemaining.minutes} minutes, ${timeRemaining.seconds} seconds :)`;
@@ -26,7 +28,8 @@ export default function CountdownWidget({
     }
   };
   return (
-    <div className="bg-ios-card-bg rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden border border-ios-gray-200">
+    <>
+      <div className="bg-ios-card-bg rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden border border-ios-gray-200">
       {/* Header Section */}
       <div className="bg-ios-blue px-6 py-4 text-center">
         <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN</h1>
@@ -89,11 +92,11 @@ export default function CountdownWidget({
         </div>
       </div>
 
-      {/* Copy Button */}
-      <div className="px-6 pb-6">
+      {/* Action Buttons */}
+      <div className="px-6 pb-6 flex gap-3">
         <Button
           onClick={copyToClipboard}
-          className="w-full bg-ios-green hover:bg-ios-green/90 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-ios-green hover:bg-ios-green/90 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
         >
           {copied ? (
             <>
@@ -103,11 +106,43 @@ export default function CountdownWidget({
           ) : (
             <>
               <Copy className="w-4 h-4" />
-              Copy Countdown
+              Copy
             </>
           )}
         </Button>
+        
+        <Button
+          onClick={() => setShowShareModal(true)}
+          className="flex-1 bg-ios-blue hover:bg-ios-blue/90 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2"
+        >
+          <Share2 className="w-4 h-4" />
+          Share
+        </Button>
       </div>
     </div>
+    
+    {/* Share Modal */}
+    {showShareModal && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="bg-white dark:bg-ios-gray-100 rounded-3xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200">
+          {/* Modal Header */}
+          <div className="bg-ios-blue px-6 py-4 text-center relative">
+            <h2 className="text-white text-lg font-semibold">Share Countdown</h2>
+            <button
+              onClick={() => setShowShareModal(false)}
+              className="absolute top-4 right-4 text-white opacity-80 hover:opacity-100"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+          
+          {/* Modal Content */}
+          <div className="p-6">
+            <SocialShare timeRemaining={timeRemaining} />
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }

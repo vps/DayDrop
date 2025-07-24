@@ -4,6 +4,50 @@ import { storage } from "./storage";
 import sharp from "sharp";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Generate social media preview card
+  app.get("/api/social-preview", async (req, res) => {
+    try {
+      const targetDate = new Date("2025-12-25T23:59:59");
+      const now = new Date();
+      const diffMs = targetDate.getTime() - now.getTime();
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      
+      // Create elegant minimalist preview card
+      const svgCard = `
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1c1c1e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Main number with clean typography -->
+  <text x="600" y="320" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="220" font-weight="200" text-anchor="middle" fill="white" letter-spacing="-5">${days}</text>
+  
+  <!-- Simple subtitle -->
+  <text x="600" y="400" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="32" font-weight="300" text-anchor="middle" fill="#888" letter-spacing="2">DAYS LEFT</text>
+  
+  <!-- Minimal accent -->
+  <rect x="550" y="440" width="100" height="2" fill="#007AFF" opacity="0.8"/>
+</svg>`;
+      
+      const pngBuffer = await sharp(Buffer.from(svgCard))
+        .png()
+        .toBuffer();
+      
+      res.setHeader('Content-Type', 'image/png');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.send(pngBuffer);
+    } catch (error) {
+      console.error('Error generating social preview:', error);
+      res.status(500).send('Error generating preview');
+    }
+  });
+
   // Generate dynamic icon with countdown number
   app.get("/api/dynamic-icon", async (req, res) => {
     try {
