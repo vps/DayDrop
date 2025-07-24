@@ -60,13 +60,22 @@ Preferred communication style: Simple, everyday language.
 ### PWA Installation Flow
 1. Browser detects installability via beforeinstallprompt event
 2. Custom install button triggers browser's native install prompt
-3. Service worker caches essential resources for offline access
-4. App registers as installable PWA with proper manifest
+3. Enhanced service worker with background sync capabilities
+4. App registers as installable PWA with iOS-optimized manifest
+5. Page visibility and focus handling for proper iOS PWA updates
 
 ### Settings Persistence
 - Notification preferences stored in component state (not persisted)
 - PWA install state managed through browser APIs
 - Countdown data persisted across sessions via localStorage
+- Last update timestamp tracked for user verification
+
+### iOS PWA Optimization (Added January 2025)
+- Enhanced service worker with background sync messaging
+- Page visibility change handlers for iOS app focus
+- Visual last-updated timestamp indicator
+- Periodic sync registration for supported browsers
+- Proper PWA manifest with shortcuts and iOS meta tags
 
 ## External Dependencies
 

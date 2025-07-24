@@ -1,13 +1,16 @@
 {
   "name": "Countdown Widget",
   "short_name": "Countdown",
-  "description": "iOS-inspired countdown timer widget",
+  "description": "iOS-inspired countdown timer widget with real-time updates",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F2F2F7",
   "theme_color": "#007AFF",
   "orientation": "portrait",
   "categories": ["productivity", "utilities"],
+  "prefer_related_applications": false,
+  "lang": "en-US",
+  "scope": "/",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -20,6 +23,15 @@
       "sizes": "512x512", 
       "type": "image/png",
       "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Countdown",
+      "short_name": "Countdown",
+      "description": "View current countdown timer",
+      "url": "/",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

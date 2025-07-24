@@ -10,10 +10,27 @@ export function usePWA() {
       navigator.serviceWorker.register('/sw.js')
         .then((registration) => {
           console.log('SW registered: ', registration);
+          
+          // Set up periodic background sync for supported browsers
+          if ('periodicSync' in registration) {
+            registration.periodicSync.register('countdown-update', {
+              minInterval: 24 * 60 * 60 * 1000, // 24 hours
+            }).catch((err) => {
+              console.log('Periodic sync registration failed:', err);
+            });
+          }
         })
         .catch((registrationError) => {
           console.log('SW registration failed: ', registrationError);
         });
+
+      // Listen for service worker messages
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data.type === 'COUNTDOWN_UPDATE_REQUIRED') {
+          // Trigger page refresh to update countdown
+          window.location.reload();
+        }
+      });
     }
 
     // Listen for install prompt

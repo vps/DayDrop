@@ -14,7 +14,8 @@ export function useCountdown() {
     hours: 0,
     minutes: 0,
     seconds: 0,
-    totalMs: 0
+    totalMs: 0,
+    lastUpdated: new Date()
   });
   const [isComplete, setIsComplete] = useState(false);
 
@@ -50,7 +51,7 @@ export function useCountdown() {
     }
   }, [targetDate]);
 
-  // Update countdown every second
+  // Update countdown with proper iOS PWA handling
   useEffect(() => {
     const updateCountdown = () => {
       if (targetDate) {
@@ -60,12 +61,33 @@ export function useCountdown() {
       }
     };
 
+    // Initial update
     updateCountdown();
 
     // Update every second for real-time display
     const interval = setInterval(updateCountdown, 1000);
     
-    return () => clearInterval(interval);
+    // Handle page visibility changes (iOS PWA focus)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        // Page became visible, force update
+        updateCountdown();
+      }
+    };
+
+    // Handle app focus (iOS PWA)
+    const handleFocus = () => {
+      updateCountdown();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+    
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
   }, [targetDate]);
 
   const setTargetDate = (date: Date) => {

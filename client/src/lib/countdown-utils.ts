@@ -6,6 +6,7 @@ export interface TimeRemaining {
   minutes: number;
   seconds: number;
   totalMs: number;
+  lastUpdated: Date;
 }
 
 export function calculateTimeRemaining(targetDate: Date): TimeRemaining {
@@ -18,7 +19,7 @@ export function calculateTimeRemaining(targetDate: Date): TimeRemaining {
   const difference = target.getTime() - now.getTime();
   
   if (difference <= 0) {
-    return { days: 0, hours: 0, minutes: 0, seconds: 0, totalMs: 0 };
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, totalMs: 0, lastUpdated: now };
   }
   
   const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -26,7 +27,7 @@ export function calculateTimeRemaining(targetDate: Date): TimeRemaining {
   const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((difference % (1000 * 60)) / 1000);
   
-  return { days, hours, minutes, seconds, totalMs: difference };
+  return { days, hours, minutes, seconds, totalMs: difference, lastUpdated: now };
 }
 
 export function calculateDaysRemaining(targetDate: Date): number {

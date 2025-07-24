@@ -1,4 +1,4 @@
-const CACHE_NAME = 'countdown-widget-v1';
+const CACHE_NAME = 'countdown-widget-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -14,17 +14,8 @@ self.addEventListener('install', (event) => {
         return cache.addAll(urlsToCache);
       })
   );
-});
-
-// Fetch event
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      })
-  );
+  // Force activation of new service worker
+  self.skipWaiting();
 });
 
 // Activate service worker
@@ -40,4 +31,51 @@ self.addEventListener('activate', (event) => {
       );
     })
   );
+  // Take control of all clients
+  return self.clients.claim();
 });
+
+// Fetch event
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        // Return cached version or fetch from network
+        return response || fetch(event.request);
+      })
+  );
+});
+
+// Background sync for iOS PWA updates
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'UPDATE_COUNTDOWN') {
+    // Broadcast to all clients to update countdown
+    self.clients.matchAll().then((clients) => {
+      clients.forEach((client) => {
+        client.postMessage({
+          type: 'COUNTDOWN_UPDATE_REQUIRED',
+          timestamp: Date.now()
+        });
+      });
+    });
+  }
+});
+
+// Periodic background sync (for supported browsers)
+self.addEventListener('periodicsync', (event) => {
+  if (event.tag === 'countdown-update') {
+    event.waitUntil(updateCountdown());
+  }
+});
+
+function updateCountdown() {
+  // Notify all clients to update their countdown
+  return self.clients.matchAll().then((clients) => {
+    clients.forEach((client) => {
+      client.postMessage({
+        type: 'COUNTDOWN_UPDATE_REQUIRED',
+        timestamp: Date.now()
+      });
+    });
+  });
+}

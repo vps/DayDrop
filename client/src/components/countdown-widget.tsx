@@ -72,9 +72,18 @@ export default function CountdownWidget({
         )}
 
         {/* Status Indicator */}
-        <div className="flex items-center justify-center space-x-2">
+        <div className="flex items-center justify-center space-x-2 mb-2">
           <div className="w-3 h-3 bg-ios-green rounded-full animate-pulse"></div>
           <span className="text-xs text-gray-600 font-medium">ACTIVE</span>
+        </div>
+        
+        {/* Last Updated Indicator */}
+        <div className="text-xs text-gray-400 text-center">
+          Last updated: {new Date(timeRemaining.lastUpdated).toLocaleTimeString([], { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            second: '2-digit'
+          })}
         </div>
       </div>
 
