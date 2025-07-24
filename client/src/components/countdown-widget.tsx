@@ -15,7 +15,7 @@ export default function CountdownWidget({
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = async () => {
-    const countdownText = `Hey, the amount of days until the event is ${timeRemaining.days} days, ${timeRemaining.hours} hours, ${timeRemaining.minutes} minutes, ${timeRemaining.seconds} seconds`;
+    const countdownText = `Hey jaani, the amount of days until forever with you is ${timeRemaining.days} days, ${timeRemaining.hours} hours, ${timeRemaining.minutes} minutes, ${timeRemaining.seconds} seconds :)`;
     
     try {
       await navigator.clipboard.writeText(countdownText);
