@@ -7,6 +7,8 @@ This is an iOS-inspired countdown widget application built as a Progressive Web 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Countdown copy text: "Hey jaani, the amount of days until forever with you is X days, Y hours, Z minutes, W seconds :)"
+Target date: December 25, 2025 (fixed)
 
 ## System Architecture
 
@@ -77,6 +79,13 @@ Preferred communication style: Simple, everyday language.
 - Periodic sync registration for supported browsers
 - Proper PWA manifest with shortcuts and iOS meta tags
 
+### Dynamic Content Generation (Added January 2025)
+- Dynamic Open Graph meta tags for iMessage link previews showing current countdown
+- Server-side icon generation with current day count using Sharp
+- Personalized sharing message: "Hey jaani, X days until forever with you :)"
+- Real-time countdown API endpoint for fresh data on every share
+- Dynamic PWA icons that update with current countdown value
+
 ## External Dependencies
 
 ### UI and Styling
@@ -90,10 +99,11 @@ Preferred communication style: Simple, everyday language.
 - **TypeScript**: Type safety across frontend and backend
 - **PostCSS**: CSS processing with Tailwind and Autoprefixer
 
-### Backend (Minimal)
+### Backend
 - **Express.js**: Web server framework
 - **Drizzle ORM**: Type-safe database toolkit (configured for future use)
 - **Neon Database**: Serverless PostgreSQL (configured but not actively used)
+- **Sharp**: High-performance image processing for dynamic icon generation
 
 ## Deployment Strategy
 
