@@ -16,6 +16,6 @@ export function formatDate(date: Date): string {
 }
 
 export function getDefaultTargetDate(): Date {
-  // Default to 30 days from now
-  return addDays(new Date(), 30);
+  // Default to December 25, 2025
+  return new Date('2025-12-25T23:59:59.999Z');
 }
