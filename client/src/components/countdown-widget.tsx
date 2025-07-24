@@ -15,7 +15,7 @@ export default function CountdownWidget({
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = async () => {
-    const countdownText = `Hey, the amount of days until Christmas is ${timeRemaining.days} days, ${timeRemaining.hours} hours, ${timeRemaining.minutes} minutes, ${timeRemaining.seconds} seconds`;
+    const countdownText = `Hey, the amount of days until the event is ${timeRemaining.days} days, ${timeRemaining.hours} hours, ${timeRemaining.minutes} minutes, ${timeRemaining.seconds} seconds`;
     
     try {
       await navigator.clipboard.writeText(countdownText);
@@ -29,7 +29,7 @@ export default function CountdownWidget({
     <div className="bg-white rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden">
       {/* Header Section */}
       <div className="bg-ios-blue px-6 py-4 text-center">
-        <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN TO CHRISTMAS</h1>
+        <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN</h1>
       </div>
 
       {/* Main Countdown Display */}
