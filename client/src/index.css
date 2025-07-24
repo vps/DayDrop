@@ -27,15 +27,15 @@
   /* iOS Colors - Light */
   --ios-blue: hsl(207, 100%, 55%);
   --ios-green: hsl(134, 65%, 50%);
-  --ios-bg: hsl(240, 11%, 96%);
+  --ios-bg: hsl(0, 0%, 94%);
   --ios-red: hsl(8, 100%, 59%);
   --ios-text: hsl(0, 0%, 0%);
   --ios-card-bg: hsl(0, 0%, 100%);
-  --ios-gray-100: hsl(0, 0%, 96%);
-  --ios-gray-200: hsl(0, 0%, 89%);
-  --ios-gray-400: hsl(0, 0%, 68%);
-  --ios-gray-500: hsl(0, 0%, 62%);
-  --ios-gray-600: hsl(0, 0%, 45%);
+  --ios-gray-100: hsl(220, 14%, 96%);
+  --ios-gray-200: hsl(220, 13%, 91%);
+  --ios-gray-400: hsl(220, 9%, 46%);
+  --ios-gray-500: hsl(220, 9%, 46%);
+  --ios-gray-600: hsl(220, 14%, 11%);
 }
 
 .dark {
@@ -62,15 +62,15 @@
   /* iOS Colors - Dark */
   --ios-blue: hsl(207, 100%, 55%);
   --ios-green: hsl(134, 65%, 50%);
-  --ios-bg: hsl(0, 0%, 0%);
+  --ios-bg: hsl(0, 0%, 6%);
   --ios-red: hsl(8, 100%, 59%);
   --ios-text: hsl(0, 0%, 100%);
-  --ios-card-bg: hsl(0, 0%, 9%);
+  --ios-card-bg: hsl(0, 0%, 12%);
   --ios-gray-100: hsl(0, 0%, 15%);
-  --ios-gray-200: hsl(0, 0%, 20%);
-  --ios-gray-400: hsl(0, 0%, 40%);
-  --ios-gray-500: hsl(0, 0%, 55%);
-  --ios-gray-600: hsl(0, 0%, 70%);
+  --ios-gray-200: hsl(0, 0%, 19%);
+  --ios-gray-400: hsl(0, 0%, 52%);
+  --ios-gray-500: hsl(0, 0%, 64%);
+  --ios-gray-600: hsl(0, 0%, 78%);
 }
 
 @layer base {
@@ -100,12 +100,21 @@
     background-color: var(--ios-bg);
   }
   
+  .dark .bg-ios-bg {
+    background: linear-gradient(135deg, hsl(0, 0%, 6%) 0%, hsl(220, 10%, 8%) 100%);
+  }
+  
   .bg-ios-red {
     background-color: var(--ios-red);
   }
   
   .bg-ios-card-bg {
     background-color: var(--ios-card-bg);
+  }
+  
+  .dark .bg-ios-card-bg {
+    background: linear-gradient(145deg, hsl(0, 0%, 12%) 0%, hsl(220, 8%, 14%) 100%);
+    border: 1px solid hsl(0, 0%, 22%);
   }
   
   .bg-ios-gray-100 {
@@ -149,6 +158,6 @@
   }
   
   .dark .shadow-lg {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
   }
 }

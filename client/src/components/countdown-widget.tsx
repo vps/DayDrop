@@ -26,7 +26,7 @@ export default function CountdownWidget({
     }
   };
   return (
-    <div className="bg-ios-card-bg rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden border border-ios-gray-200 dark:border-ios-gray-200">
+    <div className="bg-ios-card-bg rounded-3xl shadow-lg max-w-sm w-full mx-auto overflow-hidden border border-ios-gray-200">
       {/* Header Section */}
       <div className="bg-ios-blue px-6 py-4 text-center">
         <h1 className="text-white text-lg font-semibold tracking-wide">COUNTDOWN</h1>
