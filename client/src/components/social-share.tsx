@@ -48,60 +48,60 @@ export default function SocialShare({ timeRemaining }: SocialShareProps) {
             variant="ghost"
             size="sm"
             onClick={shareLinks.twitter}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100 dark:hover:bg-ios-gray-200"
+            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
           >
             <Twitter className="w-5 h-5 mb-1 text-ios-blue" />
-            <span className="text-xs text-ios-gray-600">Twitter</span>
+            <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Twitter</span>
           </Button>
           
           <Button
             variant="ghost"
             size="sm"
             onClick={shareLinks.facebook}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100 dark:hover:bg-ios-gray-200"
+            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
           >
             <Facebook className="w-5 h-5 mb-1 text-ios-blue" />
-            <span className="text-xs text-ios-gray-600">Facebook</span>
+            <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Facebook</span>
           </Button>
           
           <Button
             variant="ghost"
             size="sm"
             onClick={shareLinks.linkedin}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100 dark:hover:bg-ios-gray-200"
+            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
           >
             <Linkedin className="w-5 h-5 mb-1 text-ios-blue" />
-            <span className="text-xs text-ios-gray-600">LinkedIn</span>
+            <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">LinkedIn</span>
           </Button>
           
           <Button
             variant="ghost"
             size="sm"
             onClick={shareLinks.whatsapp}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100 dark:hover:bg-ios-gray-200"
+            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
           >
             <MessageCircle className="w-5 h-5 mb-1 text-ios-green" />
-            <span className="text-xs text-ios-gray-600">WhatsApp</span>
+            <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">WhatsApp</span>
           </Button>
           
           <Button
             variant="ghost"
             size="sm"
             onClick={shareLinks.telegram}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100 dark:hover:bg-ios-gray-200"
+            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
           >
             <Send className="w-5 h-5 mb-1 text-ios-blue" />
-            <span className="text-xs text-ios-gray-600">Telegram</span>
+            <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Telegram</span>
           </Button>
           
           <Button
             variant="ghost"
             size="sm"
             onClick={shareLinks.email}
-            className="flex flex-col items-center p-3 hover:bg-ios-gray-100 dark:hover:bg-ios-gray-200"
+            className="flex flex-col items-center p-3 hover:bg-ios-gray-100/50 dark:hover:bg-white/10"
           >
             <Mail className="w-5 h-5 mb-1 text-ios-gray-600" />
-            <span className="text-xs text-ios-gray-600">Email</span>
+            <span className="text-xs text-ios-gray-600 dark:text-ios-gray-400">Email</span>
           </Button>
         </div>
       </div>
