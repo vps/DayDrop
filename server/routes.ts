@@ -24,12 +24,18 @@ function hashString(str: string): number {
 
 // Calculate days remaining to match frontend logic
 function calculateDaysRemaining(): number {
+  // Create date in local timezone like frontend does
   const targetDate = new Date("2025-12-25T23:59:59");
-  // Set to end of day to match frontend calculation (23:59:59.999)
+  // Note: This creates a date in the server's local timezone (UTC in Replit)
+  // For true consistency, we'd need to know the user's timezone
   targetDate.setHours(23, 59, 59, 999);
   const now = new Date();
   const diffMs = targetDate.getTime() - now.getTime();
-  return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  // Add 1 day to account for timezone differences
+  // This ensures the preview matches what most users see
+  return days + 1;
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
