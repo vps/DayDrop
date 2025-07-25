@@ -22,14 +22,21 @@ function hashString(str: string): number {
   return hash.readUInt32BE(0);
 }
 
+// Calculate days remaining to match frontend logic
+function calculateDaysRemaining(): number {
+  const targetDate = new Date("2025-12-25T23:59:59");
+  // Set to end of day to match frontend calculation (23:59:59.999)
+  targetDate.setHours(23, 59, 59, 999);
+  const now = new Date();
+  const diffMs = targetDate.getTime() - now.getTime();
+  return Math.floor(diffMs / (1000 * 60 * 60 * 24));
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Generate social media preview card with dynamic palette
   app.get("/api/social-preview", async (req, res) => {
     try {
-      const targetDate = new Date("2025-12-25T23:59:59");
-      const now = new Date();
-      const diffMs = targetDate.getTime() - now.getTime();
-      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const days = calculateDaysRemaining();
       
       // Get countdownId (using target date as ID) and paletteId from query
       const countdownId = req.query.countdownId as string || targetDate.toISOString();
@@ -87,10 +94,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Remove .png extension if present
       const countdownId = req.params.id.replace(/\.png$/, '');
-      const targetDate = new Date("2025-12-25T23:59:59");
-      const now = new Date();
-      const diffMs = targetDate.getTime() - now.getTime();
-      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const days = calculateDaysRemaining();
       
       // Get paletteId from query
       const providedPaletteId = req.query.palette ? parseInt(req.query.palette as string) : null;
@@ -145,10 +149,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Generate dynamic icon with countdown number
   app.get("/api/dynamic-icon", async (req, res) => {
     try {
-      const targetDate = new Date("2025-12-25T23:59:59");
-      const now = new Date();
-      const diffMs = targetDate.getTime() - now.getTime();
-      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const days = calculateDaysRemaining();
       
       // Create SVG icon with the day count
       const svgIcon = `
@@ -182,6 +183,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoint for countdown data
   app.get("/api/countdown-data", (req, res) => {
     const targetDate = new Date("2025-12-25T23:59:59");
+    // Set to end of day to match frontend calculation (23:59:59.999)
+    targetDate.setHours(23, 59, 59, 999);
     const now = new Date();
     const diffMs = targetDate.getTime() - now.getTime();
     
