@@ -86,6 +86,17 @@ Target date: December 25, 2025 (fixed)
 - Real-time countdown API endpoint for fresh data on every share
 - Dynamic PWA icons that update with current countdown value
 
+### Deterministic Color Palette System (Added July 2025)
+- 8 predefined color palettes: ocean, sunset, forest, purple, midnight, gold, rose, teal
+- Deterministic palette selection based on countdownId hash (SHA-256)
+- Same countdownId always produces the same color palette
+- Palette override via query parameter: `?palette={0-7}` or `?paletteId={0-7}`
+- CDN-optimized caching with ETag headers including palette information
+- Endpoints:
+  - `/api/social-preview?countdownId={id}&paletteId={0-7}`
+  - `/og/countdown/{id}.png?palette={0-7}`
+- Default countdownId: "dec-25-2025" → rose palette (#FF375F → #FF6482)
+
 ## External Dependencies
 
 ### UI and Styling
