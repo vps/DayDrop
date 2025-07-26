@@ -82,13 +82,21 @@ export default function CountdownWidget({
           <span className="text-xs text-ios-gray-600 font-medium">ACTIVE</span>
         </div>
         
-        {/* Last Updated Indicator */}
+        {/* Last Updated Indicator with Refresh */}
         <div className="text-xs text-ios-gray-400 text-center">
-          Last updated: {new Date(timeRemaining.lastUpdated).toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit',
-            second: '2-digit'
-          })}
+          <div>
+            Last updated: {new Date(timeRemaining.lastUpdated).toLocaleTimeString([], { 
+              hour: '2-digit', 
+              minute: '2-digit',
+              second: '2-digit'
+            })}
+          </div>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-1 text-ios-blue hover:text-ios-blue/80 font-medium underline"
+          >
+            Refresh app
+          </button>
         </div>
       </div>
 

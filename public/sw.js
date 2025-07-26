@@ -1,10 +1,13 @@
-const CACHE_NAME = 'countdown-widget-v2';
+const CACHE_NAME = 'countdown-widget-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png'
 ];
+
+// Force refresh for iOS PWAs
+const FORCE_REFRESH_INTERVAL = 3600000; // 1 hour
 
 // Install service worker
 self.addEventListener('install', (event) => {
@@ -35,13 +38,31 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// Fetch event
+// Fetch event - Network first strategy for iOS PWA
 self.addEventListener('fetch', (event) => {
+  // Skip cache for navigation requests to always get fresh content
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        return caches.match(event.request);
+      })
+    );
+    return;
+  }
+  
+  // For other requests, try network first, then cache
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
+        // Clone the response before caching
+        const responseToCache = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+        return response;
+      })
+      .catch(() => {
+        return caches.match(event.request);
       })
   );
 });

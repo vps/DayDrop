@@ -72,6 +72,16 @@ export function useCountdown() {
       if (!document.hidden) {
         // Page became visible, force update
         updateCountdown();
+        
+        // Force a full page reload if app has been in background for > 1 hour
+        const lastUpdate = localStorage.getItem('lastAppUpdate');
+        if (lastUpdate) {
+          const timeSinceUpdate = Date.now() - parseInt(lastUpdate);
+          if (timeSinceUpdate > 3600000) { // 1 hour
+            window.location.reload();
+          }
+        }
+        localStorage.setItem('lastAppUpdate', Date.now().toString());
       }
     };
 
