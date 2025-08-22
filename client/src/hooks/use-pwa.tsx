@@ -5,32 +5,51 @@ export function usePWA() {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then((registration) => {
-          console.log('SW registered: ', registration);
-          
-          // Set up periodic background sync for supported browsers
-          if ('periodicSync' in registration) {
-            registration.periodicSync.register('countdown-update', {
-              minInterval: 24 * 60 * 60 * 1000, // 24 hours
-            }).catch((err) => {
-              console.log('Periodic sync registration failed:', err);
+    // Delay service worker registration until after page load for better performance
+    const registerServiceWorker = () => {
+      if ('serviceWorker' in navigator) {
+        // Use requestIdleCallback if available, otherwise use setTimeout
+        const register = () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registered: ', registration);
+              
+              // Set up periodic background sync for supported browsers
+              if ('periodicSync' in registration) {
+                registration.periodicSync.register('countdown-update', {
+                  minInterval: 24 * 60 * 60 * 1000, // 24 hours
+                }).catch((err) => {
+                  console.log('Periodic sync registration failed:', err);
+                });
+              }
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError);
             });
-          }
-        })
-        .catch((registrationError) => {
-          console.log('SW registration failed: ', registrationError);
-        });
 
-      // Listen for service worker messages
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data.type === 'COUNTDOWN_UPDATE_REQUIRED') {
-          // Trigger page refresh to update countdown
-          window.location.reload();
+          // Listen for service worker messages
+          navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data.type === 'COUNTDOWN_UPDATE_REQUIRED') {
+              // Trigger page refresh to update countdown
+              window.location.reload();
+            }
+          });
+        };
+
+        // Delay registration to not block initial render
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(register);
+        } else {
+          setTimeout(register, 1000); // Wait 1 second
         }
-      });
+      }
+    };
+
+    // Register service worker after page has loaded
+    if (document.readyState === 'complete') {
+      registerServiceWorker();
+    } else {
+      window.addEventListener('load', registerServiceWorker);
     }
 
     // Listen for install prompt

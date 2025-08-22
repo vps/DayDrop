@@ -38,32 +38,21 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// Fetch event - Network first strategy for iOS PWA
+// Fetch event - Simplified for faster initial load
 self.addEventListener('fetch', (event) => {
-  // Skip cache for navigation requests to always get fresh content
+  // For navigation requests, always go to network first for fresh content
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => {
-        return caches.match(event.request);
-      })
+      fetch(event.request).catch(() => caches.match(event.request))
     );
     return;
   }
   
-  // For other requests, try network first, then cache
+  // For other requests, use cache-first strategy for speed
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Clone the response before caching
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-        return response;
-      })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+    caches.match(event.request).then((response) => {
+      return response || fetch(event.request);
+    })
   );
 });
 
