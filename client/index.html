@@ -31,6 +31,64 @@
       #root {
         min-height: 100vh;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      
+      /* Skeleton Loader Styles */
+      .skeleton-loader {
+        max-width: 28rem;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        border-radius: 1.5rem;
+        overflow: hidden;
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      
+      .skeleton-header {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 1rem 1.5rem;
+        text-align: center;
+      }
+      
+      .skeleton-bar {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        margin: 0 auto;
+      }
+      
+      .skeleton-main {
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+      
+      .skeleton-number {
+        height: 8rem;
+        width: 12rem;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 1rem;
+        margin: 0 auto 1rem;
+      }
+      
+      .skeleton-buttons {
+        padding: 0 1.5rem 1.5rem;
+        display: flex;
+        gap: 0.75rem;
+      }
+      
+      .skeleton-button {
+        flex: 1;
+        height: 3rem;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 0.75rem;
       }
     </style>
     
@@ -59,7 +117,29 @@
     <meta property="og:locale" content="en_US">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Inline skeleton loader - shows immediately before JS loads -->
+      <div class="skeleton-loader">
+        <div class="skeleton-header">
+          <div class="skeleton-bar" style="height: 1.25rem; width: 8rem;"></div>
+        </div>
+        <div class="skeleton-main">
+          <div class="skeleton-number"></div>
+          <div class="skeleton-bar" style="height: 1.5rem; width: 6rem; margin-bottom: 1.5rem;"></div>
+          <div style="display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 2rem;">
+            <div style="background: rgba(255,255,255,0.1); border-radius: 1rem; padding: 0.75rem 1rem; width: 5rem; height: 4rem;"></div>
+            <div style="background: rgba(255,255,255,0.1); border-radius: 1rem; padding: 0.75rem 1rem; width: 5rem; height: 4rem;"></div>
+            <div style="background: rgba(255,255,255,0.1); border-radius: 1rem; padding: 0.75rem 1rem; width: 5rem; height: 4rem;"></div>
+          </div>
+          <div class="skeleton-bar" style="height: 1rem; width: 75%; margin-bottom: 0.5rem;"></div>
+          <div class="skeleton-bar" style="height: 1rem; width: 66%;"></div>
+        </div>
+        <div class="skeleton-buttons">
+          <div class="skeleton-button"></div>
+          <div class="skeleton-button"></div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
