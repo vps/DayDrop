@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import * as cron from "node-cron";
 
 const app = express();
 app.use(express.json());
@@ -67,5 +68,21 @@ app.use((req, res, next) => {
     reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+    
+    // Setup cron job to refresh the website every 30 minutes
+    // This helps keep the iOS PWA fresh and prevents stale data
+    cron.schedule('*/30 * * * *', async () => {
+      try {
+        const response = await fetch(`http://localhost:${port}/`);
+        log(`Cron refresh: ${response.status} - ${new Date().toISOString()}`);
+      } catch (error) {
+        log(`Cron refresh failed: ${error}`);
+      }
+    }, {
+      scheduled: true,
+      timezone: "UTC"
+    });
+    
+    log('Cron job scheduled: website refresh every 30 minutes');
   });
 })();
